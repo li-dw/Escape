@@ -26,6 +26,7 @@ void UOpenDoor::BeginPlay()
 
 	const FRotator newRotation = FRotator(0.f, -60.f, 0.f);
 	Owner->SetActorRotation(newRotation);
+
 }
 
 

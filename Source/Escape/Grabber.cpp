@@ -3,6 +3,8 @@
 #include "Grabber.h"
 
 
+#define OUT
+
 // Sets default values for this component's properties
 UGrabber::UGrabber()
 {
@@ -30,5 +32,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+    FVector viewVecotr;
+    FRotator viewRotator;
+    
+    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
+    
+    UE_LOG(LogTemp, Warning, TEXT("viewLocation is %s,viewRotator is %s"),*viewVecotr.ToString(),*viewRotator.ToString());
 }
 

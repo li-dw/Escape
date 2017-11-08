@@ -44,6 +44,17 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
 	
 	DrawDebugLine(GetWorld(), viewVecotr, rayLineEnd, FColor(255, 0, 0), false, 0.f, 0, 10.f);
+    
+    FHitResult lineTraceHit;
+    FCollisionQueryParams tracePara(FName(TEXT("")),false,GetOwner());
+    GetWorld()->LineTraceSingleByObjectType(OUT lineTraceHit, viewVecotr, rayLineEnd, FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),tracePara);
+    
+    AActor* hitObjectActor=lineTraceHit.GetActor();
+    if (hitObjectActor) {
+        UE_LOG(LogTemp, Warning, TEXT("hit object name is %s"),*hitObjectActor->GetName())
+
+    }
+    
 
 }
 

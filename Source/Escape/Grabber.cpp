@@ -24,6 +24,16 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+//    physicsHandle=GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+    physicsHandle=GetWorld()->GetFirstPlayerController()->GetPawn()->FindComponentByClass<UPhysicsHandleComponent>();
+    if(physicsHandle)
+    {
+        
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("can't find PhysicsHandleComponent"));
+    }
 	
 }
 

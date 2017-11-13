@@ -30,4 +30,11 @@ private:
 		float lineReachDistance = 100.f;
     UPROPERTY(EditAnywhere)
     UPhysicsHandleComponent* physicsHandle=nullptr;
+    
+    UPROPERTY(EditAnywhere)
+    UInputComponent* inputHandle=nullptr;
+    
+    void Grab();
+    
+    void Release();
 };

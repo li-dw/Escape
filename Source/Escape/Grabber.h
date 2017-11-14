@@ -37,4 +37,10 @@ private:
     void Grab();
     
     void Release();
+    
+    void FindPhysicsHandle();
+    
+    void SetInputHandle();
+    
+    const FHitResult GetFirthHitResult();
 };

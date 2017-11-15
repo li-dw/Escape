@@ -34,6 +34,9 @@ private:
     UPROPERTY(EditAnywhere)
     UInputComponent* inputHandle=nullptr;
     
+    UPROPERTY(EditAnywhere)
+    FVector rayStartLocation;
+    
     void Grab();
     
     void Release();
@@ -42,5 +45,7 @@ private:
     
     void SetInputHandle();
     
-    const FHitResult GetFirthHitResult();
+    const FHitResult GetFirstHitResult();
+    
+    const FVector GetLineEndVecotr();
 };

@@ -36,20 +36,34 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-    GetFirthHitResult();
-    
 
+    if (physicsHandle->GrabbedComponent) {
+        physicsHandle->SetTargetLocation(GetLineEndVecotr());
+
+    }
+    
 }
 
 void UGrabber::Grab()
 {
     UE_LOG(LogTemp, Warning, TEXT("input pressed"));
+    auto hitResult=GetFirstHitResult();
+    auto componentToGrab=hitResult.GetComponent();
+    auto hitActor=hitResult.GetActor();
+    if (hitActor) {
+        //获取射线碰到的物体，并设置抓取时位置和旋转,后面必须设置setTargetLocation,这个是定义实时的位置。
+        physicsHandle->GrabComponentAtLocationWithRotation(componentToGrab, NAME_None, componentToGrab->GetOwner()->GetActorLocation(), componentToGrab->GetOwner()->GetActorRotation());
+    }
+    
+//    physicsHandle->GrabComponent(componentToGrab, NAME_None,componentToGrab->GetOwner()->GetActorLocation(), true);
 
 }
 
 void UGrabber::Release()
 {
     UE_LOG(LogTemp, Warning, TEXT("input Release"));
+    //放开抓取的组件
+    physicsHandle->ReleaseComponent();
 }
 
 void UGrabber::FindPhysicsHandle()
@@ -83,17 +97,14 @@ void UGrabber::SetInputHandle()
 
 }
 
-const FHitResult UGrabber::GetFirthHitResult()
+const FHitResult UGrabber::GetFirstHitResult()
 {
     FVector viewVecotr;
     FRotator viewRotator;
     
     GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
-    
-    /*UE_LOG(LogTemp, Warning, TEXT("viewLocation is %s,viewRotator is %s"),*viewVecotr.ToString(),*viewRotator.ToString());*/
-    
     FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
-    
+
     DrawDebugLine(GetWorld(), viewVecotr, rayLineEnd, FColor(255, 0, 0), false, 0.f, 0, 10.f);
     
     FHitResult lineTraceHit;
@@ -108,4 +119,18 @@ const FHitResult UGrabber::GetFirthHitResult()
     }
     
     return FHitResult();
+}
+
+const FVector UGrabber::GetLineEndVecotr()
+{
+    FVector viewVecotr;
+    FRotator viewRotator;
+    
+    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
+    
+    /*UE_LOG(LogTemp, Warning, TEXT("viewLocation is %s,viewRotator is %s"),*viewVecotr.ToString(),*viewRotator.ToString());*/
+    
+    FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
+    
+    return rayLineEnd;
 }

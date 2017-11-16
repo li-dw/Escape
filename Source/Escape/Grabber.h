@@ -47,5 +47,8 @@ private:
     
     const FHitResult GetFirstHitResult();
     
-    const FVector GetLineEndVecotr();
+    inline const FVector GetLineEndVector();
+    
+    inline const FVector GetLineStartVector();
+    
 };

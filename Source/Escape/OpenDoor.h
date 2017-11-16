@@ -33,8 +33,8 @@ private:
     UPROPERTY(EditAnywhere)
     ATriggerVolume* pressurePlate;
     
-    UPROPERTY(EditAnywhere)
-    AActor* defaultPawn;
+//    UPROPERTY(EditAnywhere)
+//    AActor* defaultPawn;
     
     UPROPERTY(EditAnywhere)
     float openDoorDelay=1.f;
@@ -43,4 +43,5 @@ private:
     
     void OpenDoorByObject();
     void CloseDoor();
+    const float GetPlateTotalMass();
 };

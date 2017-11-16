@@ -38,7 +38,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// ...
 
     if (physicsHandle->GrabbedComponent) {
-        physicsHandle->SetTargetLocation(GetLineEndVecotr());
+        physicsHandle->SetTargetLocation(GetLineEndVector());
 
     }
     
@@ -99,17 +99,17 @@ void UGrabber::SetInputHandle()
 
 const FHitResult UGrabber::GetFirstHitResult()
 {
-    FVector viewVecotr;
-    FRotator viewRotator;
-    
-    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
-    FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
+//    FVector viewVecotr;
+//    FRotator viewRotator;
+//    
+//    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
+//    FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
 
-    DrawDebugLine(GetWorld(), viewVecotr, rayLineEnd, FColor(255, 0, 0), false, 0.f, 0, 10.f);
+    DrawDebugLine(GetWorld(), GetLineStartVector(), GetLineEndVector(), FColor(255, 0, 0), false, 0.f, 0, 10.f);
     
     FHitResult lineTraceHit;
     FCollisionQueryParams tracePara(FName(TEXT("")),false,GetOwner());
-    GetWorld()->LineTraceSingleByObjectType(OUT lineTraceHit, viewVecotr, rayLineEnd, FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),tracePara);
+    GetWorld()->LineTraceSingleByObjectType(OUT lineTraceHit, GetLineStartVector(), GetLineEndVector(), FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),tracePara);
     
     AActor* hitObjectActor=lineTraceHit.GetActor();
     if (hitObjectActor) {
@@ -121,7 +121,7 @@ const FHitResult UGrabber::GetFirstHitResult()
     return FHitResult();
 }
 
-const FVector UGrabber::GetLineEndVecotr()
+inline const FVector UGrabber::GetLineEndVector()
 {
     FVector viewVecotr;
     FRotator viewRotator;
@@ -133,4 +133,13 @@ const FVector UGrabber::GetLineEndVecotr()
     FVector rayLineEnd = viewVecotr + viewRotator.Vector()* lineReachDistance;
     
     return rayLineEnd;
+}
+
+inline const FVector UGrabber::GetLineStartVector()
+{
+    FVector viewVecotr;
+    FRotator viewRotator;
+    
+    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT viewVecotr, OUT viewRotator);
+    return viewVecotr;
 }

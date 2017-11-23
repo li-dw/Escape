@@ -53,8 +53,9 @@ void UOpenDoor::OpenDoorByObject()
     //	auto ownerRotation = Owner->GetTransform().GetRotation();
     //	UE_LOG(LogTemp, Warning, TEXT("owner rotation is %s"), *ownerRotation.ToString());
     
-    const FRotator newRotation = FRotator(0.f, rotationAngle, 0.f);
-    Owner->SetActorRotation(newRotation);
+//    const FRotator newRotation = FRotator(0.f, rotationAngle, 0.f);
+//    Owner->SetActorRotation(newRotation);
+    DoorOpen.Broadcast();
 }
 
 void UOpenDoor::CloseDoor()

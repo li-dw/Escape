@@ -8,6 +8,7 @@
 #include "OpenDoor.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenDoor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCloseDoor);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ESCAPE_API UOpenDoor : public UActorComponent
@@ -29,23 +30,29 @@ public:
     UPROPERTY(BlueprintAssignable)
     FOnOpenDoor DoorOpen;
     
+    UPROPERTY(BlueprintAssignable)
+    FOnCloseDoor OnClose;
+    
 private:
     UPROPERTY(VisibleAnywhere)
     AActor* Owner;
-    UPROPERTY(VisibleAnywhere)
-    float rotationAngle = -60.f;
+//    UPROPERTY(VisibleAnywhere)
+//    float rotationAngle = -60.f;
     UPROPERTY(EditAnywhere)
     ATriggerVolume* pressurePlate;
     
 //    UPROPERTY(EditAnywhere)
 //    AActor* defaultPawn;
     
+//    UPROPERTY(EditAnywhere)
+//    float openDoorDelay=1.f;
+//    
+//    float lastOpenDoorTime;
+    
+//    void OpenDoorByObject();
+    
     UPROPERTY(EditAnywhere)
-    float openDoorDelay=1.f;
-    
-    float lastOpenDoorTime;
-    
-    void OpenDoorByObject();
-    void CloseDoor();
+    float totalmass=30.f;
+//    void CloseDoor();
     const float GetPlateTotalMass();
 };

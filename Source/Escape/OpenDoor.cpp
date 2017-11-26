@@ -33,36 +33,41 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
     
     // ...
     
-    if (GetPlateTotalMass()>30.f) {
-        OpenDoorByObject();
-        lastOpenDoorTime=GetWorld()->GetTimeSeconds();
+    if (GetPlateTotalMass()>totalmass) {
+//        OpenDoorByObject();
+//        lastOpenDoorTime=GetWorld()->GetTimeSeconds();
+        DoorOpen.Broadcast();
     }
-    
-    if(GetWorld()->GetTimeSeconds()-lastOpenDoorTime>openDoorDelay)
+    else
     {
-        CloseDoor();
-
+        //closeDoor
+        OnClose.Broadcast();
     }
+//    if(GetWorld()->GetTimeSeconds()-lastOpenDoorTime>openDoorDelay)
+//    {
+//        CloseDoor();
+//
+//    }
    
 }
 
 
-void UOpenDoor::OpenDoorByObject()
-{
-    
-    //	auto ownerRotation = Owner->GetTransform().GetRotation();
-    //	UE_LOG(LogTemp, Warning, TEXT("owner rotation is %s"), *ownerRotation.ToString());
-    
-//    const FRotator newRotation = FRotator(0.f, rotationAngle, 0.f);
-//    Owner->SetActorRotation(newRotation);
-    DoorOpen.Broadcast();
-}
+//void UOpenDoor::OpenDoorByObject()
+//{
+//    
+//    //	auto ownerRotation = Owner->GetTransform().GetRotation();
+//    //	UE_LOG(LogTemp, Warning, TEXT("owner rotation is %s"), *ownerRotation.ToString());
+//    
+////    const FRotator newRotation = FRotator(0.f, rotationAngle, 0.f);
+////    Owner->SetActorRotation(newRotation);
+//    DoorOpen.Broadcast();
+//}
 
-void UOpenDoor::CloseDoor()
-{
-    const auto closeRotation=FRotator(0.f,0.f,0.f);
-    Owner->SetActorRotation(closeRotation);
-}
+//void UOpenDoor::CloseDoor()
+//{
+//    const auto closeRotation=FRotator(0.f,0.f,0.f);
+//    Owner->SetActorRotation(closeRotation);
+//}
 
 const float UOpenDoor::GetPlateTotalMass()
 {
